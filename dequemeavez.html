@@ -36,7 +36,8 @@
 
 </head>
 
-<body>
+<body style="background-color: #EFF3F9">
+    
 
     <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -46,54 +47,105 @@
                 <div class="six columns" style="margin-top: 10%">
                     <h4>Iniciativa</h4>
                     <div id="player">
-                        <form id="cu">
+                        <form id="update">
+                            
+                            <div class="six columns">
+                                <select class="u-full-width" id="playerSelect" ng-model="playerName">
+                                    <option ng-repeat="p in players" value="{{p.name}}">{{p.name}}</option>
+                                </select>
+                            </div>
+
+                            <div class="two columns">
+                                <input class="u-full-width" type="text" placeholder="D20" id="playerIniciative" ng-model="playerIni">
+                            </div>
+
+                            <div class="four columns">
+                                <button type="submit" class="button-primary" ng-click="updatePlayer(playerName, playerIni)">Update</button>
+                            </div>
+                        </form>
+                        <hr style="color:black">
+                    </div>
+                    
+                    <div id="player">
+                        <form id="new">
                             <div class="six columns">
                                 <input class="u-full-width" type="text" placeholder="Jogador" id="playerName" ng-model="playerName">
                             </div>
                             <div class="six columns">
-                                <select class="u-full-width" id="demageDice" ng-model="pType">
+                                <select class="u-full-width" id="pType" ng-model="pType" ng->
                             <option value="friend">Amigo</option>
-                            <option value="foe">Inimigo</option>
+                            <option value="foe" >Inimigo</option>
                         </select>
                             </div>
                     </div>
+
                     <div>
                         <div class="two columns">
-                            <input class="u-full-width" type="text" placeholder="CA" id="playerCA" ng-model="ca" value="{{ca}}">
+                            <input class="u-full-width" type="text" placeholder="CA" id="playerCA" ng-model="ca">
                         </div>
                         <div class="two columns">
                             <input class="u-full-width" type="text" placeholder="HP" id="playerHP" ng-model="hp">
                         </div>
                         <div class="two columns">
-                            <input class="u-full-width" type="text" placeholder="D20" id="playerIniciative" ng-model="playerIni">
+                            <input class="u-full-width" type="text" placeholder="D20" id="playerIni" ng-model="playerIni">
                         </div>
 
                         <div class="six columns">
-                            <button type="submit" class="button-primary" ng-click="addPlayer(playerName, ca, playerIni, hp, pType)">Inserir</button>
+                            <button type="submit" class="button-primary u-full-width" ng-click="addPlayer(playerName, ca, playerIni, hp, pType)">Inserir</button>
                         </div>
-                        <form>
+                        </form>
                     </div>
                     
-                        
-                            <div class="six columns">
-                                <select class="u-full-width" id="playerSelect">
-                                    <option ng-repeat="p in players" value="{{p.name}}">{{p.name}}</option>
-                                </select>
-                            </div>
-                            <div class="two columns">
-                                <input class="u-full-width" type="text" placeholder="D20" id="playerIniciative" ng-model="playerIni">
-                            </div>
-                            <div class="six columns">
-                                <button type="submit" class="button-primary" ng-click="addPlayer(playerName, ca, playerIni, hp, pType)">Inserir</button>
-                            </div>
-                    
-                    
-
-
                 </div>
 
-                <div class="six columns" style="margin-top: 10%">
-                    <h4>Inimigos</h4>
+                <div class="six columns" style="margin-top: 11%">
+                    <h4>Danos e Curas</h4>
+                    <div id="player">
+
+                        <div class="six columns">
+                                <select class="u-full-width" id="playerName" ng-model="playerName">
+                                    <option ng-repeat="p in players" value="{{p.name}}">{{p.name}}</option>
+                                </select>
+                        </div>
+
+                        <div class="three columns">
+                            <input class="u-full-width" type="text" placeholder="Dano" id="demage" ng-model="demage">
+                        </div>
+
+                        <div class="two columns">
+                            <button type="submit" class="button-primary" ng-click="addDemage(playerName, demage)">Submit</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="six columns">
+                                <select class="u-full-width" id="playerName" ng-model="playerName">
+                                    <option ng-repeat="p in players" value="{{p.name}}">{{p.name}}</option>
+                                </select>
+                        </div>
+
+                        <div class="three columns">
+                            <input class="u-full-width" type="text" placeholder="Cura" id="ng-model" ng-model="heal">
+                        </div>
+
+                        <div class="two columns">
+                            <button type="submit" class="button-primary" ng-click="addHeal(playerName, heal)">Submit</button>
+                        </div>
+
+                    </div>
+
+                </div>
+                
+
+
+
+
+
+
+
+
+ <!--               <div class="six columns" style="margin-top: 10%">
+                    <h4>Danos e Curas</h4>
                     <div id="player">
                         <div class="three columns">
                             <input class="u-full-width" type="text" placeholder="Dano Base" id="playerName" name="baseDemage[]">
@@ -145,6 +197,7 @@
                     </div>
 
                 </div>
+                -->
             </div>
 
             <div>
@@ -156,15 +209,16 @@
                                 <th>Jogador</th>
                                 <th>CA</th>
                                 <th>HP</th>
-                                <th>Staus</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="p in players">
                                 <td>{{p.Ini}}</td>
-                                <td>{{p.name}}</td>
+                                <td ng-if="p.type=='foe'" style="color: red">{{p.name}}</td>
+                                <td ng-if="p.type=='friend'">{{p.name}}</td>
                                 <td>{{p.ca}}</td>
                                 <td>{{p.hp}}</td>
+                                <td><i class="fa fa-minus-circle fa-lg" style="color: #33C3F0" ng-click="removePlayer(p.name)"></i></td>
                             </tr>
                         </tbody>
                     </table>
