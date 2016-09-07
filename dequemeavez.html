@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>De Quem É A Vez?</title>
+    <meta name="site para mestres de RPG" content="">
+    <meta name="@betinacosta" content="">
+
+    <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+
+    <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+
+    <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="images/dice.png">
+
+    <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="scripts/dequemeavez.js"></script>
+
+
+</head>
+
+<body>
+
+    <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <div class="container" ng-app="myApp" ng-controller="myCtrl">
+        <div class="row">
+            <div>
+                <div class="six columns" style="margin-top: 10%">
+                    <h4>Iniciativa</h4>
+                    <div id="player">
+                        <form id="cu">
+                            <div class="six columns">
+                                <input class="u-full-width" type="text" placeholder="Jogador" id="playerName" ng-model="playerName">
+                            </div>
+                            <div class="six columns">
+                                <select class="u-full-width" id="demageDice" ng-model="pType">
+                            <option value="friend">Amigo</option>
+                            <option value="foe">Inimigo</option>
+                        </select>
+                            </div>
+                    </div>
+                    <div>
+                        <div class="two columns">
+                            <input class="u-full-width" type="text" placeholder="CA" id="playerCA" ng-model="ca" value="{{ca}}">
+                        </div>
+                        <div class="two columns">
+                            <input class="u-full-width" type="text" placeholder="HP" id="playerHP" ng-model="hp">
+                        </div>
+                        <div class="two columns">
+                            <input class="u-full-width" type="text" placeholder="D20" id="playerIniciative" ng-model="playerIni">
+                        </div>
+
+                        <div class="six columns">
+                            <button type="submit" class="button-primary" ng-click="addPlayer(playerName, ca, playerIni, hp, pType)">Inserir</button>
+                        </div>
+                        <form>
+                    </div>
+                    
+                        
+                            <div class="six columns">
+                                <select class="u-full-width" id="playerSelect">
+                                    <option ng-repeat="p in players" value="{{p.name}}">{{p.name}}</option>
+                                </select>
+                            </div>
+                            <div class="two columns">
+                                <input class="u-full-width" type="text" placeholder="D20" id="playerIniciative" ng-model="playerIni">
+                            </div>
+                            <div class="six columns">
+                                <button type="submit" class="button-primary" ng-click="addPlayer(playerName, ca, playerIni, hp, pType)">Inserir</button>
+                            </div>
+                    
+                    
+
+
+                </div>
+
+                <div class="six columns" style="margin-top: 10%">
+                    <h4>Inimigos</h4>
+                    <div id="player">
+                        <div class="three columns">
+                            <input class="u-full-width" type="text" placeholder="Dano Base" id="playerName" name="baseDemage[]">
+                        </div>
+
+                        <div class="three columns">
+                            <select class="u-full-width" id="demageDice">
+                            <option value="d4">D4</option>
+                            <option value="d6">D6</option>
+                            <option value="d8">D8</option>
+                            <option value="d10">D10</option>
+                            <option value="d12">D12</option>
+                        </select>
+                        </div>
+
+                        <div class="two columns">
+                            <input class="u-full-width" type="text" placeholder="1x" id="playerIniciative" name="diceQtd">
+                        </div>
+
+                        <div class="two columns">
+                            <input class="u-full-width" type="text" placeholder="Dano" id="playerIniciative" name="totalDemage" readonly>
+                        </div>
+                        <div class="two columns">
+                            <button type="submit" class="button-primary" onclick="oi()">Gerar</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="three columns">
+                            <input class="u-full-width" type="text" placeholder="HP Total" id="playerName" name="hitPoints">
+                        </div>
+
+                        <div class="three columns">
+                            <input class="u-full-width" type="text" placeholder="Redutor" id="playerName" name="reductor">
+                        </div>
+
+                        <div class="two columns">
+                            <input class="u-full-width" type="text" placeholder="Dano" id="playerIniciative" name="demage">
+                        </div>
+
+                        <div class="two columns">
+                            <input class="u-full-width" type="text" placeholder="HP" id="playerIniciative" name="totalDemage" readonly>
+                        </div>
+
+                        <div class="two columns">
+                            <button type="submit" class="button-primary" onclick="oi()">Gerar</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div>
+                <div class="twelve columns" style="margin-top: 5%">
+                    <table class="u-full-width">
+                        <thead>
+                            <tr>
+                                <th>Iniciativa</th>
+                                <th>Jogador</th>
+                                <th>CA</th>
+                                <th>HP</th>
+                                <th>Staus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="p in players">
+                                <td>{{p.Ini}}</td>
+                                <td>{{p.name}}</td>
+                                <td>{{p.ca}}</td>
+                                <td>{{p.hp}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+
+</html>
