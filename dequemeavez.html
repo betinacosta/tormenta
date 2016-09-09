@@ -36,7 +36,7 @@
 
 </head>
 
-<body style="background-color: #EFF3F9">
+<body style="background-image: url('images/7.jpg')">
 
 
     <!-- Primary Page Layout
@@ -56,15 +56,15 @@
                         </div>
                         <div class="two columns">
                             <label for="playerCA">CA</label>
-                            <input class="u-full-width" type="number" placeholder="CA" id="playerCA" ng-model="playerCA">
+                            <input class="u-full-width" type="number" min="0" placeholder="CA" id="playerCA" ng-model="playerCA">
                         </div>
                         <div class="two columns">
                             <label for="playerHP">HP</label>
-                            <input class="u-full-width" type="number" placeholder="HP" id="playerHP" ng-model="playerHP">
+                            <input class="u-full-width" type="number" min="0" placeholder="HP" id="playerHP" ng-model="playerHP">
                         </div>
                         <div class="two columns">
                             <label for="playerIni">Iniciativa</label>
-                            <input class="u-full-width" type="number" placeholder="D20" id="playerIni" ng-model="playerIni">
+                            <input class="u-full-width" type="number" min="0" placeholder="D20" id="playerIni" ng-model="playerIni">
                         </div>
                         <div class="three columns">
                             <label for="playerType">Tipo</label>
@@ -93,19 +93,19 @@
                     <form id="update">
                         <div class="six columns">
                             <label for="pNameSelectIni">Jogador</label>
-                            <select class="u-full-width" id="pNameSelectIni" ng-model="selectedPName">
-                                    <option ng-repeat="p in players" value="{{p.name}}"></option>
+                            <select class="u-full-width" id="selectedPName" ng-model="selectedPName">
+                                    <option ng-repeat="p in players" value="{{p.name}}">{{p.name}}</option>
                                 </select>
                         </div>
 
                         <div class="three columns">
                             <label for="selectedPIniciative">Iniciativa</label>
-                            <input class="u-full-width" type="number" placeholder="Iniciativa" id="selectedPIniciative" ng-model="selectedPIni">
+                            <input class="u-full-width" type="number" min="0" placeholder="Iniciativa" id="selectedPIni" ng-model="selectedPIni">
                         </div>
 
                         <div class="three columns">
                             <label for="selectedPCA">CA</label>
-                            <input class="u-full-width" type="number" placeholder="CA" id="selectedPCA" ng-model="selectedPCA">
+                            <input class="u-full-width" type="number" min="0" placeholder="CA" id="selectedPCA" ng-model="selectedPCA">
                         </div>
                         <div class="twelve columns">
                             <button type="submit" class="button-primary u-full-width" ng-click="updatePlayer(selectedPName, selectedPIni, selectedPCA)">Atualizar</button>
@@ -118,28 +118,27 @@
                     <table class="u-full-width">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Jogador</th>
                                 <th>CA</th>
                                 <th>HP</th>
-                                <th>Tipo</th>
                                 <th>Dano</th>
                                 <th>Cura</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="p in players">
-                                <td ng-if="p.type=='Inimigo'" style="color: red">{{p.name}}</td>
-                                <td ng-if="p.type=='Jogador' || p.type=='NPC'">{{p.name}}</td>
+                                <td><i class="fa fa-minus-circle fa-lg" style="color: #f1070a" ng-click="removePlayer(p.name)"></i></td>
+                                <td ng-if="p.type=='Inimigo'" style="color: red;font-weight: bold;">{{p.name}}</td>
+                                <td ng-if="p.type=='Jogador' || p.type=='NPC'" style="font-weight: bold">{{p.name}}</td>
                                 <td>{{p.ca}}</td>
                                 <td>{{p.hp}}</td>
-                                <td>{{p.type}}</td>
                                 <td>
-                                    <form style="margin-bottom: 0rem" ng-submit="addDemage(p.name, demage)"><input style="width:58px" type="text" placeholder="Dano" id="demage" ng-model="demage"></form>
+                                    <form style="margin-bottom: 0rem" ng-submit="addDemage(p.name, demage)"><input style="width:73px" placeholder="Dano" type="number" min="0" id="demage" ng-model="demage"></form>
                                 </td>
                                 <td>
-                                    <form style="margin-bottom: 0rem" ng-submit="addHeal(p.name, heal)"><input style="width:58px" class="" type="text" placeholder="Cura" id="heal" ng-model="heal"></form>
+                                    <form style="margin-bottom: 0rem" ng-submit="addHeal(p.name, heal)"><input style="width:73px" placeholder="Cura" type="number" min="0" id="heal" ng-model="heal"></form>
                                 </td>
-                                <td><i class="fa fa-minus-circle fa-lg" style="color: #33C3F0" ng-click="removePlayer(p.name)"></i></td>
                             </tr>
                         </tbody>
                     </table>
