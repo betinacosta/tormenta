@@ -3,44 +3,32 @@ var app = angular.module('myApp', []);
 app.controller('myCtrl', function ($scope) {
     $scope.players = [];
 
-    $scope.clear = function () {
-        document.getElementById("playerSelect").value = '';
-        document.getElementById("playerIniciative").value = '';
-        document.getElementById("playerName").value = '';
-        document.getElementById("pType").value = '';
-        document.getElementById("playerCA").value = '';
-        document.getElementById("playerHP").value = '';
-        document.getElementById("playerIni").value = '';
-    };
-
-    $scope.addPlayer = function (pName, pCA, pIni, pHP, pType) {
+    $scope.addIniciative = function (pName, pCA, pIni, pHP, pType) {
         $scope.player = {name: pName, ca: pCA, Ini: pIni, hp: pHP, type: pType};
         
         $scope.players.push($scope.player);
+        $scope.sortIniciative($scope.players);
 
-        $scope.players.sort(function(a, b){
-            return a.Ini-b.Ini
-        });
-
-       $scope.players.reverse();
-       $scope.clear();
-       
+       $scope.clearAdd();      
     };  
 
-    $scope.updatePlayer = function (pName, pIni) {
+    $scope.generateIni = function (pName, pCA, pIni, pHP, pType) {
+        pIni = Math.floor((Math.random() * 20) + 1) + parseInt(pIni);
+
+        $scope.addIniciative(pName, pCA, pIni, pHP, pType);
+        $scope.clearUpdate();
+    };
+
+    $scope.updatePlayer = function (pName, pIni, pCA) {
 
         for (var i = 0; i < $scope.players.length; i++) {
             if ($scope.players[i].name == pName) {
                 $scope.players[i].Ini = pIni;
+                $scope.players[i].ca = pCA;
             }  
         }
 
-        $scope.players.sort(function(a, b){
-            return a.Ini-b.Ini
-        });
-
-       $scope.players.reverse();
-       
+        $scope.sortIniciative($scope.players);
     }; 
 
     $scope.removePlayer = function (pName) {
@@ -51,12 +39,8 @@ app.controller('myCtrl', function ($scope) {
             }  
         }
 
-        $scope.players.sort(function(a, b){
-            return a.Ini-b.Ini
-        });
-
-       $scope.players.reverse();
-       $scope.players.pop();
+        $scope.sortIniciative($scope.players);
+        $scope.players.pop();
     }; 
 
     $scope.addDemage = function (pName, demage) {
@@ -72,6 +56,7 @@ app.controller('myCtrl', function ($scope) {
                 }
             }  
         }
+        document.getElementById("demage").value = '';
     }; 
 
     $scope.addHeal = function (pName, heal) {
@@ -83,7 +68,29 @@ app.controller('myCtrl', function ($scope) {
                 $scope.players[i].hp = parseInt($scope.players[i].hp) + heal;
             }  
         }
+        document.getElementById("heal").value = '';
     }; 
 
+    $scope.clearUpdate = function () {
+        document.getElementById("pNameSelectIni").value = '';
+        document.getElementById("selectedPIniciative").value = '';
+        document.getElementById("selectedPCA").value = '';
+    };
+
+    $scope.clearAdd = function () {
+        document.getElementById("playerName").value = '';
+        document.getElementById("playerCA").value = '';
+        document.getElementById("playerIni").value = '';
+        document.getElementById("playerHP").value = '';
+        document.getElementById("playerType").value = '';            
+    };
+
+    $scope.sortIniciative = function (players) {
+        players.sort(function(a, b){
+            return a.Ini-b.Ini
+        });
+
+       $scope.players.reverse();
+    };
 });
 

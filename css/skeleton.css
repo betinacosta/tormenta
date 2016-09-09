@@ -419,8 +419,6 @@ there.
 
 /* Meu CSS */
 
-.bubbles {
-  padding: 0px;
-  border-style: none; 
-  margin: 1%;
+.siteTitle {
+  text-align: center;
 }
